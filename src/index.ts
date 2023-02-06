@@ -9,7 +9,6 @@ const port = 3000
 
 const baseURL:string = "/ht_02/api"
 
-
 app.use(`${baseURL}/blogs`, blogsRouter)
 app.use(`${baseURL}/posts`, postsRouter)
 app.use(`${baseURL}/testing`, testsRouter)
