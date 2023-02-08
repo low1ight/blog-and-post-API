@@ -6,6 +6,7 @@ import {testsRouter} from "./routes/testing-router";
 const app = express()
 const port = 3000
 
+app.use(express.json())
 
 const baseURL:string = "/ht_02/api"
 

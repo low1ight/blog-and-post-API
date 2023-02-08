@@ -9,7 +9,7 @@ type PostType = {
 
 
 
-let postsDB: PostType[] = [{
+export let postsDB: PostType[] = [{
     id: "1",
     title:	"MyFirstBlog",
     shortDescription:	"about my first blog at all",
