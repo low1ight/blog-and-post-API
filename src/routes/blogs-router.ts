@@ -1,8 +1,9 @@
 import {Router,Request,Response} from "express";
 import {blogRepository} from "../repositories/blogs-repository";
-import {RequestWithBody, RequestWithParams} from "../request-types";
+import {RequestWithBody, RequestWithParams, RequestWithParamsAndBody} from "../request-types";
 import {CreateBlogModel} from "../models/CreateBlogModel";
 import {UriIdParamsBlogModel} from "../models/UriIdParamsBlogModel";
+import {UpdateBlogModel} from "../models/UpdateBlogModel";
 
 
 export const blogsRouter = Router({})
@@ -33,6 +34,13 @@ blogsRouter.post('/', (req:RequestWithBody<CreateBlogModel>, res:Response) => {
 
 })
 
+blogsRouter.put('/:id', (req:RequestWithParamsAndBody<UriIdParamsBlogModel,UpdateBlogModel>, res:Response) => {
+
+    const isBlogUpdated = blogRepository.updateBlog(req.params.id,req.body)
+   if(!isBlogUpdated) res.send(404)
+    res.send(204)
+
+})
 
 blogsRouter.delete('/:id', (req:RequestWithParams<UriIdParamsBlogModel>, res:Response) => {
 
