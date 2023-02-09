@@ -4,6 +4,7 @@ import {RequestWithBody, RequestWithParams, RequestWithParamsAndBody} from "../r
 import {UriIdParamsModel} from "../models/UriIdParamsModel";
 import {CreatePostModel} from "../models/CreatePostModel";
 import {UpdatePostModel} from "../models/UpdatePostModel";
+import {PostType} from "../db/post-database";
 
 export const postsRouter = Router({})
 
@@ -28,7 +29,7 @@ postsRouter.get('/:id', (req:RequestWithParams<UriIdParamsModel>, res) => {
 
 postsRouter.post('/', (req:RequestWithBody<CreatePostModel>, res) => {
 
-    const newPost = postsRepository.createPost(req.body)
+    const newPost:PostType | boolean = postsRepository.createPost(req.body)
 
     if(!newPost) res.send(404)
 
@@ -38,7 +39,7 @@ postsRouter.post('/', (req:RequestWithBody<CreatePostModel>, res) => {
 
 postsRouter.put('/:id', (req:RequestWithParamsAndBody<UriIdParamsModel,UpdatePostModel>, res) => {
 
-    const isPostUpdated = postsRepository.createPost(req.body)
+    const isPostUpdated:boolean = postsRepository.updatePost(req.params.id,req.body)
 
     if(!isPostUpdated) res.send(404)
 
@@ -48,7 +49,7 @@ postsRouter.put('/:id', (req:RequestWithParamsAndBody<UriIdParamsModel,UpdatePos
 
 postsRouter.delete('/:id', (req:RequestWithParams<UriIdParamsModel>, res) => {
 
-    const isPostDeleted = postsRepository.getPostById(req.params.id)
+    const isPostDeleted:boolean = postsRepository.deletePost(req.params.id)
 
     if(!isPostDeleted) res.send(404)
 
