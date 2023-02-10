@@ -10,9 +10,8 @@ export const PostsValidationMiddleware = [
 
     body(allPostFieldsArr)
         .exists().withMessage(fieldErrorMessages.dontExist).bail()
-        .trim()
-        .notEmpty().withMessage(fieldErrorMessages.isEmpty).bail()
-        .isString().withMessage(fieldErrorMessages.wrongType('string')).bail(),
+        .isString().withMessage(fieldErrorMessages.wrongType('string')).bail()
+        .trim().notEmpty().withMessage(fieldErrorMessages.isEmpty).bail(),
 
     body(title)
         .isLength({ max: 30 }).withMessage(fieldErrorMessages.tooLong(30))

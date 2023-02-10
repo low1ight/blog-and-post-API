@@ -6,5 +6,6 @@ export const fieldErrorMessages = {
 
     dontExist:"Field must exist",
     isEmpty: "Field can't be empty",
-    blogDontExist: "Can't create the post for non-existent blog"
+    blogDontExist: "Can't create the post for non-existent blog",
+    mustBeURL: "Field must be URL"
 }
