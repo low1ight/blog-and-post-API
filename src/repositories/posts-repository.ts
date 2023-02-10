@@ -42,11 +42,12 @@ export const postsRepository = {
     updatePost(id:string, newPostData:UpdatePostModel) {
 
         const postIndex = postsDB.findIndex(item => item.id === id)
-        const blog = blogsDB.find(item => item.id === id)
+        // const blog = blogsDB.find(item => item.id === id)
+        // const post = postsDB.find(item => item.id === id)
 
-        if(postIndex === -1 || !blog) return false
+        if(postIndex === -1) return false
 
-        const updatedPost:PostType = {id,...newPostData,blogName:blog.name}
+        const updatedPost:PostType = {...postsDB[postIndex], ...newPostData}
         postsDB.splice(postIndex,1,updatedPost)
         return true
     }
