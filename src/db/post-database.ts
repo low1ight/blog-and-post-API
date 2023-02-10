@@ -19,3 +19,4 @@ export let postsDB: PostType[] = [{
 }]
 
 
+export const setPostsDB = (newDB:PostType[] | []) => postsDB = newDB

@@ -2,7 +2,7 @@ import {genRandomId} from "../utils/generateRandomId";
 import {blogsDB, BlogType} from "../db/blog-database";
 import {CreateBlogModel} from "../models/CreateBlogModel";
 import {UpdateBlogModel} from "../models/UpdateBlogModel";
-
+import {postsDB, PostType, setPostsDB} from "../db/post-database";
 
 
 
@@ -15,10 +15,10 @@ export const blogRepository = {
         return blogsDB
     },
 
-    getBlogById(id:string) {
+    getBlogById(id:string)   {
 
-        const foundBlog: BlogType | undefined = blogsDB.find(i => i.id === id)
-        return foundBlog ? foundBlog : null
+        return blogsDB.find(i => i.id === id)
+
     },
 
     createBlog(newBlogData:CreateBlogModel) {
@@ -33,6 +33,9 @@ export const blogRepository = {
 
         if(blogIndex === -1) return false
 
+        const arrWithoutThisBlogPosts:PostType[] | [] = postsDB.filter(item => item.blogId !== id)
+        if(arrWithoutThisBlogPosts.length !== postsDB.length) setPostsDB(arrWithoutThisBlogPosts)
+
         blogsDB.splice(blogIndex,1)
         return true
 
@@ -45,10 +48,19 @@ export const blogRepository = {
         if(blogIndex === -1) return false
 
         // const updatingBlog:BlogType | undefined = blogsDB.find(item => item.id === id)
-        // const updatedBlog = {...updatingBlog,...newBlogData}
+        // if(updatingBlog) {
+        //     const updatedBlog = {...updatingBlog,...newBlogData}
+        // }
+
+
         const updatedBlog:BlogType = {id,...newBlogData}
+
+        let updatedPosts:PostType[] = postsDB.map(i => i.blogId === id ? {...i, blogName:newBlogData.name } : i)
+        setPostsDB(updatedPosts)
+
         blogsDB.splice(blogIndex,1,updatedBlog)
         return true
     }
 
 }
+

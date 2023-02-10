@@ -5,6 +5,9 @@ import {UriIdParamsModel} from "../models/UriIdParamsModel";
 import {CreatePostModel} from "../models/CreatePostModel";
 import {UpdatePostModel} from "../models/UpdatePostModel";
 import {PostType} from "../db/post-database";
+import {BlogsValidationMiddleware} from "../middlewares/validators/err-messages/posts-validation-middleware";
+import {inputValidationMiddleware} from "../middlewares/validators/input-validation-middleware";
+
 
 export const postsRouter = Router({})
 
@@ -27,7 +30,7 @@ postsRouter.get('/:id', (req:RequestWithParams<UriIdParamsModel>, res) => {
 
 
 
-postsRouter.post('/', (req:RequestWithBody<CreatePostModel>, res) => {
+postsRouter.post('/',BlogsValidationMiddleware,inputValidationMiddleware, (req:RequestWithBody<CreatePostModel>, res:Response) => {
 
     const newPost:PostType | boolean = postsRepository.createPost(req.body)
 
