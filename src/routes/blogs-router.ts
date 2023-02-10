@@ -6,6 +6,7 @@ import {UriIdParamsModel} from "../models/UriIdParamsModel";
 import {UpdateBlogModel} from "../models/UpdateBlogModel";
 import {BlogsValidationMiddleware} from "../middlewares/validators/blogs-validation-middleware";
 import {inputValidationMiddleware} from "../middlewares/validators/input-validation-middleware";
+import {authorizationMiddleware} from "../middlewares/authorization-middleware";
 
 
 export const blogsRouter = Router({})
@@ -28,7 +29,7 @@ blogsRouter.get('/:id', (req:RequestWithParams<UriIdParamsModel>, res:Response) 
 })
 
 
-blogsRouter.post('/', BlogsValidationMiddleware,inputValidationMiddleware,(req:RequestWithBody<CreateBlogModel>, res:Response) => {
+blogsRouter.post('/', authorizationMiddleware,BlogsValidationMiddleware,inputValidationMiddleware,(req:RequestWithBody<CreateBlogModel>, res:Response) => {
 
     const createdBlog = blogRepository.createBlog(req.body)
 
@@ -36,7 +37,7 @@ blogsRouter.post('/', BlogsValidationMiddleware,inputValidationMiddleware,(req:R
 
 })
 
-blogsRouter.put('/:id',BlogsValidationMiddleware,inputValidationMiddleware, (req:RequestWithParamsAndBody<UriIdParamsModel,UpdateBlogModel>, res:Response) => {
+blogsRouter.put('/:id',authorizationMiddleware,BlogsValidationMiddleware,inputValidationMiddleware, (req:RequestWithParamsAndBody<UriIdParamsModel,UpdateBlogModel>, res:Response) => {
 
     const isBlogUpdated = blogRepository.updateBlog(req.params.id,req.body)
    if(!isBlogUpdated) res.send(404)

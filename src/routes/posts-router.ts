@@ -7,6 +7,7 @@ import {UpdatePostModel} from "../models/UpdatePostModel";
 import {PostType} from "../db/post-database";
 import {BlogsValidationMiddleware} from "../middlewares/validators/err-messages/posts-validation-middleware";
 import {inputValidationMiddleware} from "../middlewares/validators/input-validation-middleware";
+import {authorizationMiddleware} from "../middlewares/authorization-middleware";
 
 
 export const postsRouter = Router({})
@@ -30,7 +31,7 @@ postsRouter.get('/:id', (req:RequestWithParams<UriIdParamsModel>, res) => {
 
 
 
-postsRouter.post('/',BlogsValidationMiddleware,inputValidationMiddleware, (req:RequestWithBody<CreatePostModel>, res:Response) => {
+postsRouter.post('/',authorizationMiddleware,BlogsValidationMiddleware,inputValidationMiddleware, (req:RequestWithBody<CreatePostModel>, res:Response) => {
 
     const newPost:PostType | boolean = postsRepository.createPost(req.body)
 
@@ -40,7 +41,7 @@ postsRouter.post('/',BlogsValidationMiddleware,inputValidationMiddleware, (req:R
 
 })
 
-postsRouter.put('/:id', (req:RequestWithParamsAndBody<UriIdParamsModel,UpdatePostModel>, res) => {
+postsRouter.put('/:id',authorizationMiddleware,BlogsValidationMiddleware,inputValidationMiddleware, (req:RequestWithParamsAndBody<UriIdParamsModel,UpdatePostModel>, res:Response) => {
 
     const isPostUpdated:boolean = postsRepository.updatePost(req.params.id,req.body)
 
