@@ -9,10 +9,10 @@ const [title,shortDescription,content,blogId] = allPostFieldsArr
 export const PostsValidationMiddleware = [
 
     body(allPostFieldsArr)
-        .exists().withMessage(fieldErrorMessages.dontExist)
+        .exists().withMessage(fieldErrorMessages.dontExist).bail()
         .trim()
-        .notEmpty().withMessage(fieldErrorMessages.isEmpty)
-        .isString().withMessage(fieldErrorMessages.wrongType('string')),
+        .notEmpty().withMessage(fieldErrorMessages.isEmpty).bail()
+        .isString().withMessage(fieldErrorMessages.wrongType('string')).bail(),
 
     body(title)
         .isLength({ max: 30 }).withMessage(fieldErrorMessages.tooLong(30))
