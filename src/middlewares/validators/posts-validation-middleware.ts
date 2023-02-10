@@ -3,37 +3,31 @@ import {fieldErrorMessages} from "./err-messages/err-messages";
 import {isBlogExist} from "./custom/isBlogExist";
 
 
-
-
+const allPostFieldsArr:string[] = ["title","shortDescription","content","blogId"]
+const [title,shortDescription,content,blogId] = allPostFieldsArr
 
 export const PostsValidationMiddleware = [
 
-    body('title')
-        .trim()
+    body(allPostFieldsArr)
         .exists().withMessage(fieldErrorMessages.dontExist)
-        .isString().withMessage(fieldErrorMessages.wrongType('string'))
-        .isLength({ max: 30 }).withMessage(fieldErrorMessages.tooLong(30)),
+        .trim()
+        .notEmpty().withMessage(fieldErrorMessages.isEmpty)
+        .isString().withMessage(fieldErrorMessages.wrongType('string')),
 
-    body('shortDescription').exists()
-        .trim()
-        .exists().withMessage(fieldErrorMessages.dontExist)
-        .isString().withMessage(fieldErrorMessages.wrongType('string'))
+    body(title)
+        .isLength({ max: 30 }).withMessage(fieldErrorMessages.tooLong(30))
+    ,
+
+    body(shortDescription)
         .isLength({ max: 100 }).withMessage(fieldErrorMessages.tooLong(100)),
 
 
-    body('content').exists()
-        .trim()
-        .exists().withMessage(fieldErrorMessages.dontExist)
-        .isString().withMessage(fieldErrorMessages.wrongType('string'))
+    body(content)
         .isLength({ max: 1000 }).withMessage(fieldErrorMessages.tooLong(1000)),
 
 
-    body('blogId').exists()
-        .exists().withMessage(fieldErrorMessages.dontExist)
-        .isString().withMessage(fieldErrorMessages.wrongType('string'))
+    body(blogId)
          .custom(isBlogExist)
-
-
 ]
 
 
