@@ -47,7 +47,7 @@ postsRouter.put('/:id',authorizationMiddleware,PostsValidationMiddleware,inputVa
 
     if(!isPostUpdated) res.send(404)
 
-    res.status(204)
+    res.send(204)
 
 })
 
