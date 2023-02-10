@@ -45,7 +45,7 @@ blogsRouter.put('/:id',authorizationMiddleware,BlogsValidationMiddleware,inputVa
 
 })
 
-blogsRouter.delete('/:id', (req:RequestWithParams<UriIdParamsModel>, res:Response) => {
+blogsRouter.delete('/:id',authorizationMiddleware,BlogsValidationMiddleware,inputValidationMiddleware, (req:RequestWithParams<UriIdParamsModel>, res:Response) => {
 
     const isBlogDeleted:boolean = blogRepository.deleteBlog(req.params.id)
 

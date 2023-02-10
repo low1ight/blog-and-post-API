@@ -5,7 +5,7 @@ import {UriIdParamsModel} from "../models/UriIdParamsModel";
 import {CreatePostModel} from "../models/CreatePostModel";
 import {UpdatePostModel} from "../models/UpdatePostModel";
 import {PostType} from "../db/post-database";
-import {BlogsValidationMiddleware} from "../middlewares/validators/err-messages/posts-validation-middleware";
+import {PostsValidationMiddleware} from "../middlewares/validators/posts-validation-middleware";
 import {inputValidationMiddleware} from "../middlewares/validators/input-validation-middleware";
 import {authorizationMiddleware} from "../middlewares/authorization-middleware";
 
@@ -31,7 +31,7 @@ postsRouter.get('/:id', (req:RequestWithParams<UriIdParamsModel>, res) => {
 
 
 
-postsRouter.post('/',authorizationMiddleware,BlogsValidationMiddleware,inputValidationMiddleware, (req:RequestWithBody<CreatePostModel>, res:Response) => {
+postsRouter.post('/',authorizationMiddleware,PostsValidationMiddleware,inputValidationMiddleware, (req:RequestWithBody<CreatePostModel>, res:Response) => {
 
     const newPost:PostType | boolean = postsRepository.createPost(req.body)
 
@@ -41,7 +41,7 @@ postsRouter.post('/',authorizationMiddleware,BlogsValidationMiddleware,inputVali
 
 })
 
-postsRouter.put('/:id',authorizationMiddleware,BlogsValidationMiddleware,inputValidationMiddleware, (req:RequestWithParamsAndBody<UriIdParamsModel,UpdatePostModel>, res:Response) => {
+postsRouter.put('/:id',authorizationMiddleware,PostsValidationMiddleware,inputValidationMiddleware, (req:RequestWithParamsAndBody<UriIdParamsModel,UpdatePostModel>, res:Response) => {
 
     const isPostUpdated:boolean = postsRepository.updatePost(req.params.id,req.body)
 
@@ -51,7 +51,7 @@ postsRouter.put('/:id',authorizationMiddleware,BlogsValidationMiddleware,inputVa
 
 })
 
-postsRouter.delete('/:id', (req:RequestWithParams<UriIdParamsModel>, res) => {
+postsRouter.delete('/:id',authorizationMiddleware,PostsValidationMiddleware,inputValidationMiddleware, (req:RequestWithParams<UriIdParamsModel>, res:Response) => {
 
     const isPostDeleted:boolean = postsRepository.deletePost(req.params.id)
 

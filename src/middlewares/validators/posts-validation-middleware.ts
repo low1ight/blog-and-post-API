@@ -1,12 +1,12 @@
 import {body} from "express-validator";
-import {fieldErrorMessages} from "./err-messages";
-import {isBlogExist} from "../custom/isBlogExist";
+import {fieldErrorMessages} from "./err-messages/err-messages";
+import {isBlogExist} from "./custom/isBlogExist";
 
 
 
 
 
-export const BlogsValidationMiddleware = [
+export const PostsValidationMiddleware = [
 
     body('title')
         .trim()
