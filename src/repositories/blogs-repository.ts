@@ -33,8 +33,8 @@ export const blogRepository = {
 
         if(blogIndex === -1) return false
 
-        const arrWithoutThisBlogPosts:PostType[] = postsDB.filter(item => item.blogId !== id)
-        if(arrWithoutThisBlogPosts.length !== postsDB.length) setPostsDB(arrWithoutThisBlogPosts)
+        // const arrWithoutThisBlogPosts:PostType[] = postsDB.filter(item => item.blogId !== id)
+        // if(arrWithoutThisBlogPosts.length !== postsDB.length) setPostsDB(arrWithoutThisBlogPosts)
 
         blogsDB.splice(blogIndex,1)
         return true
