@@ -2,7 +2,7 @@ import {genRandomId} from "../utils/generateRandomId";
 import {blogsDB, BlogType} from "../db/blog-database";
 import {CreateBlogModel} from "../models/CreateBlogModel";
 import {UpdateBlogModel} from "../models/UpdateBlogModel";
-import {postsDB, PostType, setPostsDB} from "../db/post-database";
+//import {postsDB, PostType, setPostsDB} from "../db/post-database";
 
 
 
@@ -22,8 +22,11 @@ export const blogRepository = {
     },
 
     createBlog(newBlogData:CreateBlogModel) {
+
         const newBlog:BlogType = {id: genRandomId(), ...newBlogData}
+
         blogsDB.push(newBlog)
+
         return newBlog
     },
 
@@ -37,26 +40,21 @@ export const blogRepository = {
         // if(arrWithoutThisBlogPosts.length !== postsDB.length) setPostsDB(arrWithoutThisBlogPosts)
 
         blogsDB.splice(blogIndex,1)
-        return true
 
+        return true
     },
 
     updateBlog(id:string, newBlogData:UpdateBlogModel) {
 
-        const blogIndex = blogsDB.findIndex(item => item.id === id)
+        const blogIndex:number = blogsDB.findIndex(item => item.id === id)
 
         if(blogIndex === -1) return false
 
-        // const updatingBlog:BlogType | undefined = blogsDB.find(item => item.id === id)
-        // if(updatingBlog) {
-        //     const updatedBlog = {...updatingBlog,...newBlogData}
-        // }
-
-
         const updatedBlog:BlogType = {id,...newBlogData}
 
-        let updatedPosts:PostType[] = postsDB.map(i => i.blogId === id ? {...i, blogName:newBlogData.name } : i)
-        setPostsDB(updatedPosts)
+        // let updatedPosts:PostType[] = postsDB.map(i => i.blogId === id ? {...i, blogName:newBlogData.name } : i)
+        //
+        // setPostsDB(updatedPosts)
 
         blogsDB.splice(blogIndex,1,updatedBlog)
         return true

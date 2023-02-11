@@ -42,8 +42,6 @@ export const postsRepository = {
     updatePost(id:string, newPostData:UpdatePostModel) {
 
         const postIndex = postsDB.findIndex(item => item.id === id)
-        // const blog = blogsDB.find(item => item.id === id)
-        // const post = postsDB.find(item => item.id === id)
 
         if(postIndex === -1) return false
 

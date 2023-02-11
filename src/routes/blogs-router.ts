@@ -37,13 +37,17 @@ blogsRouter.post('/', authorizationMiddleware,BlogsValidationMiddleware,inputVal
 
 })
 
+
 blogsRouter.put('/:id',authorizationMiddleware,BlogsValidationMiddleware,inputValidationMiddleware, (req:RequestWithParamsAndBody<UriIdParamsModel,UpdateBlogModel>, res:Response) => {
 
-    const isBlogUpdated = blogRepository.updateBlog(req.params.id,req.body)
+    const isBlogUpdated:boolean = blogRepository.updateBlog(req.params.id,req.body)
+
    if(!isBlogUpdated) res.send(404)
+
     res.send(204)
 
 })
+
 
 blogsRouter.delete('/:id',authorizationMiddleware, (req:RequestWithParams<UriIdParamsModel>, res:Response) => {
 
@@ -52,6 +56,7 @@ blogsRouter.delete('/:id',authorizationMiddleware, (req:RequestWithParams<UriIdP
     if(!isBlogDeleted) res.send(404)
 
     res.send(204)
+
 })
 
 

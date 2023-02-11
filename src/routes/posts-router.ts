@@ -31,7 +31,7 @@ postsRouter.get('/:id', (req:RequestWithParams<UriIdParamsModel>, res) => {
 
 
 
-postsRouter.post('/',authorizationMiddleware,PostsValidationMiddleware,inputValidationMiddleware, (req:RequestWithBody<CreatePostModel>, res:Response) => {
+postsRouter.post('/', authorizationMiddleware, PostsValidationMiddleware, inputValidationMiddleware, (req:RequestWithBody<CreatePostModel>, res:Response) => {
 
     const newPost:PostType | boolean = postsRepository.createPost(req.body)
 
